@@ -47,7 +47,7 @@ export default function CartDrawer() {
         {items.length === 0 ? (
           <EmptyCart compact />
         ) : (
-          <>
+          <div className="drawer__body">
             <div className="drawer__items">
               {items.map((item) => (
                 <CartItem key={item.lineId} item={item} />
@@ -56,7 +56,6 @@ export default function CartDrawer() {
             <footer className="drawer__foot">
               <OrderSummary
                 pricing={pricing}
-                items={items}
                 action={
                   <Button to="/checkout" disabled={pricing.shortOfMinimum > 0}>
                     Proceed to Checkout
@@ -75,7 +74,7 @@ export default function CartDrawer() {
                 Or send this order on WhatsApp
               </a>
             </footer>
-          </>
+          </div>
         )}
       </aside>
     </>

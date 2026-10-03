@@ -1,17 +1,10 @@
 import { Link } from "react-router-dom";
-import Button from "./Button";
 import FoodImage from "./FoodImage";
+import AddToCartControl from "./AddToCartControl";
 import { formatINR } from "../utils/currency";
-import { useCart } from "../context/CartContext";
 
 export default function FoodCard({ item, featured = false }) {
-  const { addToCart } = useCart();
   const soldOut = item.available === false;
-
-  const add = () => {
-    if (soldOut) return;
-    addToCart({ productId: item.id, quantity: 1 });
-  };
 
   if (featured) {
     return (
@@ -28,9 +21,7 @@ export default function FoodCard({ item, featured = false }) {
           <p className="feature__price">{formatINR(item.price)}</p>
           <p>{item.description}</p>
           <div className="feature__actions">
-            <Button onClick={add} disabled={soldOut}>
-              {soldOut ? "Sold out" : "Add to Cart"}
-            </Button>
+            <AddToCartControl productId={item.id} disabled={soldOut} variant="primary" />
             <Link to={`/menu/${item.id}`} className="link-arrow">
               Customise
             </Link>
@@ -54,9 +45,7 @@ export default function FoodCard({ item, featured = false }) {
           <p className="price">{formatINR(item.price)}</p>
         </div>
         <p>{item.description}</p>
-        <Button onClick={add} disabled={soldOut}>
-          {soldOut ? "Sold out" : "Add to Cart"}
-        </Button>
+        <AddToCartControl productId={item.id} disabled={soldOut} />
       </div>
     </article>
   );

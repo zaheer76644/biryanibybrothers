@@ -1,11 +1,21 @@
-export default function QuantitySelector({ value, onChange, min = 1, max = 10, label = "Quantity" }) {
+export default function QuantitySelector({
+  value,
+  onChange,
+  min = 1,
+  max = 10,
+  label = "Quantity",
+  allowRemove = false,
+  className = "",
+}) {
+  const canDecrease = allowRemove ? value >= 1 : value > min;
+
   return (
-    <div className="qty" role="group" aria-label={label}>
+    <div className={`qty ${className}`.trim()} role="group" aria-label={label}>
       <button
         type="button"
         onClick={() => onChange(value - 1)}
-        disabled={value <= min}
-        aria-label="Decrease quantity"
+        disabled={!canDecrease}
+        aria-label={allowRemove && value <= 1 ? "Remove from cart" : "Decrease quantity"}
       >
         −
       </button>

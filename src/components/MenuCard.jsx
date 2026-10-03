@@ -1,12 +1,10 @@
 import { Link } from "react-router-dom";
-import Button from "./Button";
 import FoodImage from "./FoodImage";
 import DietBadge from "./DietBadge";
+import AddToCartControl from "./AddToCartControl";
 import { formatINR } from "../utils/currency";
-import { useCart } from "../context/CartContext";
 
 export default function MenuCard({ item }) {
-  const { addToCart } = useCart();
   const soldOut = item.available === false;
 
   return (
@@ -24,13 +22,7 @@ export default function MenuCard({ item }) {
         </div>
         <DietBadge diet={item.diet} />
         <p className="menu-card__desc">{item.description}</p>
-        <Button
-          variant="outline"
-          onClick={() => addToCart({ productId: item.id, quantity: 1 })}
-          disabled={soldOut}
-        >
-          {soldOut ? "Sold out" : "Add to Cart"}
-        </Button>
+        <AddToCartControl productId={item.id} disabled={soldOut} />
       </div>
     </article>
   );

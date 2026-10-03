@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { ChevronRight } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { formatINR } from "../utils/currency";
 import Button from "./Button";
@@ -33,14 +34,24 @@ export default function MobileDock() {
 
   if (showCart) {
     return (
-      <div className="dock">
-        <p>
-          <strong>
-            {count} {count === 1 ? "item" : "items"}
-          </strong>
-          <span>{formatINR(pricing.total)}</span>
-        </p>
-        <Button onClick={openDrawer}>View Cart</Button>
+      <div className="dock dock--cart">
+        <button type="button" className="dock__pill" onClick={openDrawer}>
+          <span className="dock__count" aria-hidden="true">
+            {count}
+          </span>
+          <span className="dock__info">
+            <strong>{formatINR(pricing.total)}</strong>
+            <small>
+              {pricing.freeDelivery
+                ? "Free delivery unlocked"
+                : `${formatINR(pricing.awayFromFree)} more for free delivery`}
+            </small>
+          </span>
+          <span className="dock__go">
+            Cart
+            <ChevronRight size={16} aria-hidden="true" />
+          </span>
+        </button>
       </div>
     );
   }

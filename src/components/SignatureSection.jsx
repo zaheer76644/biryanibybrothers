@@ -1,16 +1,13 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles } from "lucide-react";
-import Button from "./Button";
 import FoodImage from "./FoodImage";
 import DietBadge from "./DietBadge";
+import AddToCartControl from "./AddToCartControl";
 import Ornament from "./Ornament";
 import Reveal from "./Reveal";
 import { formatINR } from "../utils/currency";
-import { useCart } from "../context/CartContext";
 
 export default function SignatureSection({ featured, items }) {
-  const { addToCart } = useCart();
-
   if (!featured) return null;
 
   return (
@@ -56,12 +53,11 @@ export default function SignatureSection({ featured, items }) {
               <li>Mira Road fresh</li>
             </ul>
             <div className="meet-hero__actions">
-              <Button
-                onClick={() => addToCart({ productId: featured.id, quantity: 1 })}
+              <AddToCartControl
+                productId={featured.id}
                 disabled={featured.available === false}
-              >
-                {featured.available === false ? "Sold out" : "Add to Cart"}
-              </Button>
+                variant="primary"
+              />
               <Link to={`/menu/${featured.id}`} className="link-arrow">
                 Customise <ArrowRight size={16} aria-hidden="true" />
               </Link>
@@ -96,13 +92,10 @@ export default function SignatureSection({ featured, items }) {
                     </div>
                     <DietBadge diet={item.diet} />
                     <p>{item.description}</p>
-                    <Button
-                      variant="outline"
-                      onClick={() => addToCart({ productId: item.id, quantity: 1 })}
+                    <AddToCartControl
+                      productId={item.id}
                       disabled={item.available === false}
-                    >
-                      {item.available === false ? "Sold out" : "Add to Cart"}
-                    </Button>
+                    />
                   </div>
                 </article>
               </Reveal>
