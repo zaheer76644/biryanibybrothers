@@ -1,0 +1,11 @@
+export { default as logo } from "./images/logo.png";
+export { default as mark } from "./images/mark.png";
+export { default as heroBiryani } from "./images/hero-biryani.jpg";
+export { default as chickenDum } from "./images/chicken-dum.jpg";
+export { default as chickenTikka } from "./images/chicken-tikka.jpg";
+export { default as eggBiryani } from "./images/egg-biryani.jpg";
+export { default as hyderabadBiryani } from "./images/hyderabad-biryani.jpg";
+export { default as dumBiryani } from "./images/dum-biryani.jpg";
+export { default as gulabJamun } from "./images/gulab-jamun.jpg";
+export { default as coke } from "./images/coke.jpg";
+export { default as story } from "./images/story.jpg";
