@@ -56,6 +56,7 @@ export default function CartDrawer() {
             <footer className="drawer__foot">
               <OrderSummary
                 pricing={pricing}
+                items={items}
                 action={
                   <Button to="/checkout" disabled={pricing.shortOfMinimum > 0}>
                     Proceed to Checkout

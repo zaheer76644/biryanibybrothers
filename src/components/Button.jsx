@@ -11,11 +11,17 @@ export default function Button({
   ...props
 }) {
   const classes = `btn btn--${variant} ${className}`.trim();
+  const inner = (
+    <>
+      <span className="btn__shine" aria-hidden="true" />
+      <span className="btn__label">{children}</span>
+    </>
+  );
 
   if (to && !disabled) {
     return (
       <Link to={to} className={classes} {...props}>
-        {children}
+        {inner}
       </Link>
     );
   }
@@ -23,14 +29,14 @@ export default function Button({
   if (href && !disabled) {
     return (
       <a href={href} className={classes} {...props}>
-        {children}
+        {inner}
       </a>
     );
   }
 
   return (
     <button type={type} className={classes} disabled={disabled} {...props}>
-      {children}
+      {inner}
     </button>
   );
 }

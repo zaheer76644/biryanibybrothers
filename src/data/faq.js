@@ -27,7 +27,7 @@ export const faqs = [
     id: "customize",
     question: "Can I customize my order?",
     answer:
-      "Yes. On a biryani you can add extra chicken, raita or salan, and leave a short note for the kitchen before you place the order.",
+      "Yes. On a biryani you can add raita or salan, extra chicken on non-veg, or extra paneer on veg, and leave a short note for the kitchen before you place the order.",
   },
   {
     id: "how-far",
@@ -39,7 +39,7 @@ export const faqs = [
     id: "veg",
     question: "Do you have vegetarian options?",
     answer:
-      "Egg Biryani is on the menu. A fully vegetarian biryani is not on the menu right now. Gulab jamun is also available.",
+      "Yes. Veg Dum Biryani and a Veg Biryani + Coke combo are on the menu, along with raita, salan and gulab jamun. Egg Biryani is also available. Use the Veg and Non-Veg filters on the menu page.",
   },
   {
     id: "cancel",

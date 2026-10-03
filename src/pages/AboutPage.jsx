@@ -19,7 +19,7 @@ export default function AboutPage() {
       <PageHero
         eyebrow={business.location}
         title="Two Brothers. One Recipe."
-        text="Biryani By Brothers started with a simple idea — make the kind of biryani we'd happily order for ourselves."
+        text={`${business.taglineHeart} We started with a simple idea — make the kind of biryani we'd happily order for ourselves.`}
       />
       <section className="section section--cream">
         <div className="wrap story">
@@ -57,7 +57,7 @@ export default function AboutPage() {
       <section className="section section--cream">
         <div className="wrap story story--reverse">
           <div className="story__media frame">
-            <FoodImage src={dumBiryani} alt="Opened dum biryani with the dough seal broken" />
+            <FoodImage src={dumBiryani} alt="Chicken dum biryani in a brass handi" />
           </div>
           <div className="prose prose--tight">
             <h2>What we pay attention to</h2>

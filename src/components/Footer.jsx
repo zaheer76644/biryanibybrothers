@@ -12,6 +12,7 @@ export default function Footer() {
         <div className="footer__brand">
           <img src={logo} alt="Biryani By Brothers" />
           <p>{business.tagline}</p>
+          <p className="footer__tagline-heart">{business.taglineHeart}</p>
         </div>
         <div>
           <h2>Quick links</h2>

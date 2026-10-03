@@ -10,7 +10,7 @@ export default function MenuPage() {
   usePageMeta({
     title: pageTitle("Menu"),
     description:
-      "Chicken dum biryani, chicken tikka biryani, egg biryani, combos, sweets and drinks from Biryani By Brothers in Mira Road.",
+      "Veg and non-veg dum biryani from Biryani By Brothers in Mira Road. Order chicken, veg, egg biryani, combos and more.",
   });
   const [active, setActive] = useState("all");
   const items = useMemo(() => getByCategory(active), [active]);
@@ -20,7 +20,7 @@ export default function MenuPage() {
       <PageHero
         eyebrow="The menu"
         title="Cooked in small batches."
-        text="Chicken, egg, combos and a few things to eat beside the rice. Prices are for one portion."
+        text="Veg and non-veg biryani, combos and sides. Prices are for one portion."
       />
       <CategoryTabs categories={menuCategories} active={active} onChange={setActive} />
       <section className="section section--cream menu-section">

@@ -8,4 +8,8 @@ export { default as hyderabadBiryani } from "./images/hyderabad-biryani.jpg";
 export { default as dumBiryani } from "./images/dum-biryani.jpg";
 export { default as gulabJamun } from "./images/gulab-jamun.jpg";
 export { default as coke } from "./images/coke.jpg";
+export { default as extraChicken } from "./images/extra-chicken.jpg";
+export { default as raita } from "./images/raita.jpg";
+export { default as salan } from "./images/salan.jpg";
+export { default as vegBiryani } from "./images/veg-biryani.jpg";
 export { default as story } from "./images/story.jpg";

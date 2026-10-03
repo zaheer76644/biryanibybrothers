@@ -1,6 +1,7 @@
 import Button from "./Button";
 import FoodImage from "./FoodImage";
 import TrustBadges from "./TrustBadges";
+import { business } from "../config/business";
 import { formatINR } from "../utils/currency";
 
 export default function HeroSection({ image, featured }) {
@@ -30,8 +31,9 @@ export default function HeroSection({ image, featured }) {
             <span>Two Brothers.</span>
             <span>One Recipe.</span>
           </h1>
+          <p className="hero__tagline">{business.taglineHeart}</p>
           <p className="lede">
-            Small-batch biryani, dum-cooked with love and served fresh in Mira Road.
+            Small-batch veg and non-veg biryani, dum-cooked with love and served fresh in Mira Road.
           </p>
           <div className="hero__actions">
             <Button to="/menu/chicken-dum-biryani">Order Biryani</Button>

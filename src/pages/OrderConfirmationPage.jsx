@@ -10,6 +10,7 @@ import { formatINR } from "../utils/currency";
 import { orderHelpMessage, whatsappHref } from "../utils/whatsapp";
 import Button from "../components/Button";
 import WhatsAppIcon from "../components/WhatsAppIcon";
+import Ornament from "../components/Ornament";
 
 export default function OrderConfirmationPage() {
   usePageMeta({
@@ -47,6 +48,7 @@ export default function OrderConfirmationPage() {
         </div>
         <p className="kicker">Order confirmed</p>
         <h1>Order Confirmed!</h1>
+        <Ornament />
         <p className="confirm__thanks">Thank you for ordering from Biryani By Brothers.</p>
         <p className="confirm__id">
           Order number <strong>{order.id}</strong>
@@ -100,14 +102,15 @@ export default function OrderConfirmationPage() {
             Order Again
           </Button>
         </div>
-        <a
-          className="btn btn--secondary confirm__wa"
+        <Button
+          className="confirm__wa"
+          variant="outline"
           href={whatsappHref(orderHelpMessage(order.id))}
           target="_blank"
           rel="noreferrer"
         >
           <WhatsAppIcon /> Need help? Chat with us on WhatsApp
-        </a>
+        </Button>
       </div>
     </div>
   );

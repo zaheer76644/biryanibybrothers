@@ -8,7 +8,7 @@ import { seo } from "../config/brand";
 import { usePageMeta } from "../hooks/usePageMeta";
 import HeroSection from "../components/HeroSection";
 import SectionHeading from "../components/SectionHeading";
-import FoodCard from "../components/FoodCard";
+import SignatureSection from "../components/SignatureSection";
 import StorySection from "../components/StorySection";
 import ProcessSection from "../components/ProcessSection";
 import ReviewCard from "../components/ReviewCard";
@@ -30,21 +30,7 @@ export default function HomePage() {
     <div className="page">
       <HeroSection image={heroBiryani} featured={featured} />
 
-      <section className="section section--cream">
-        <div className="wrap">
-          <SectionHeading
-            eyebrow="Signature"
-            title="Meet Your Biryani"
-            text="Slow-cooked. Fragrant. Made fresh in small batches."
-          />
-          {featured && <FoodCard item={featured} featured />}
-          <div className="food-grid">
-            {others.map((item) => (
-              <FoodCard key={item.id} item={item} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <SignatureSection featured={featured} items={others} />
 
       <section className="section section--dark">
         <div className="wrap">
@@ -82,8 +68,8 @@ export default function HomePage() {
             </p>
             <DumMeter />
           </div>
-          <div className="frame handi__media zoom-media">
-            <FoodImage src={dumBiryani} alt="Dum biryani in a dough-sealed brass handi" />
+          <div className="handi__media zoom-media">
+            <FoodImage src={dumBiryani} alt="Fresh chicken dum biryani in a brass handi" />
           </div>
         </div>
       </section>

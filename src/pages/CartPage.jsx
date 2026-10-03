@@ -31,6 +31,8 @@ export default function CartPage() {
               </div>
               <OrderSummary
                 pricing={pricing}
+                items={items}
+                accent
                 action={
                   <>
                     <Button to="/checkout" disabled={pricing.shortOfMinimum > 0}>

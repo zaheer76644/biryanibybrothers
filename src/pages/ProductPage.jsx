@@ -7,6 +7,7 @@ import { usePageMeta } from "../hooks/usePageMeta";
 import { useCart } from "../context/CartContext";
 import { formatINR } from "../utils/currency";
 import FoodImage from "../components/FoodImage";
+import DietBadge from "../components/DietBadge";
 import Button from "../components/Button";
 import QuantitySelector from "../components/QuantitySelector";
 import AddOnSelector from "../components/AddOnSelector";
@@ -48,7 +49,7 @@ export default function ProductPage() {
     );
   }
 
-  const addOns = item.allowAddOns ? getAddOns() : [];
+  const addOns = item.allowAddOns ? getAddOns(item.diet) : [];
   const extra = selected.reduce((sum, id) => sum + (getMenuItem(id)?.price || 0), 0);
   const total = (item.price + extra) * qty;
   const soldOut = item.available === false;
@@ -89,7 +90,10 @@ export default function ProductPage() {
           </button>
         </div>
         <div className="product__info">
-          {item.badge && <span className="badge">{item.badge}</span>}
+          <div className="product__tags">
+            <DietBadge diet={item.diet} />
+            {item.badge && item.badge !== "Veg" && <span className="badge">{item.badge}</span>}
+          </div>
           <h1>{item.name}</h1>
           <p className="product__price">{formatINR(item.price)}</p>
           <p className="product__desc">{item.description}</p>

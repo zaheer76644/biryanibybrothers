@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Button from "./Button";
 import FoodImage from "./FoodImage";
+import DietBadge from "./DietBadge";
 import { formatINR } from "../utils/currency";
 import { useCart } from "../context/CartContext";
 
@@ -12,17 +13,17 @@ export default function MenuCard({ item }) {
     <article className="menu-card">
       <Link to={`/menu/${item.id}`} className="menu-card__media zoom-media">
         <FoodImage src={item.image} alt={item.name} />
-        {item.badge && <span className="badge">{item.badge}</span>}
+        {item.badge && item.badge !== "Veg" && <span className="badge">{item.badge}</span>}
       </Link>
       <div className="menu-card__body">
-        <div className="menu-card__title">
+        <div className="menu-card__top">
           <h3>
             <Link to={`/menu/${item.id}`}>{item.name}</Link>
           </h3>
-          <span className="menu-card__rule" aria-hidden="true" />
           <p className="price">{formatINR(item.price)}</p>
         </div>
-        <p>{item.description}</p>
+        <DietBadge diet={item.diet} />
+        <p className="menu-card__desc">{item.description}</p>
         <Button
           variant="outline"
           onClick={() => addToCart({ productId: item.id, quantity: 1 })}
