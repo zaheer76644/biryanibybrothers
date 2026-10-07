@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { X } from "lucide-react";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 import { useFocusTrap } from "../hooks/useFocusTrap";
 import Button from "./Button";
 
@@ -14,6 +15,7 @@ const links = [
 
 export default function MobileMenu() {
   const { isNavOpen, closeNav } = useCart();
+  const { isAuthenticated, logout } = useAuth();
   const ref = useFocusTrap(isNavOpen);
 
   return (
@@ -39,6 +41,33 @@ export default function MobileMenu() {
             {link.label}
           </NavLink>
         ))}
+        {isAuthenticated ? (
+          <>
+            <NavLink to="/account" onClick={closeNav}>
+              My Profile
+            </NavLink>
+            <NavLink to="/account/orders" onClick={closeNav}>
+              My Orders
+            </NavLink>
+            <NavLink to="/account/addresses" onClick={closeNav}>
+              Saved Addresses
+            </NavLink>
+            <button
+              type="button"
+              className="mobile-menu__logout"
+              onClick={async () => {
+                closeNav();
+                await logout();
+              }}
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <NavLink to="/login" onClick={closeNav}>
+            Login
+          </NavLink>
+        )}
       </nav>
       <Button to="/menu" onClick={closeNav}>
         Order Now

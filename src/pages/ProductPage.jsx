@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import { getAddOns, getMenuItem } from "../data/menu";
 import { pageTitle } from "../config/brand";
 import { usePageMeta } from "../hooks/usePageMeta";
 import { useCart } from "../context/CartContext";
+import { useCatalog } from "../context/CatalogContext";
 import { formatINR } from "../utils/currency";
 import FoodImage from "../components/FoodImage";
 import DietBadge from "../components/DietBadge";
@@ -12,10 +12,12 @@ import Button from "../components/Button";
 import QuantitySelector from "../components/QuantitySelector";
 import AddOnSelector from "../components/AddOnSelector";
 import Modal from "../components/Modal";
+import Loader from "../components/Loader";
 
 export default function ProductPage() {
   const { itemId } = useParams();
-  const item = getMenuItem(itemId);
+  const { getProduct, getAddOnsFor, isLoading } = useCatalog();
+  const item = getProduct(itemId);
   const { addToCart, maxQty } = useCart();
   const [qty, setQty] = useState(1);
   const [selected, setSelected] = useState([]);
@@ -39,6 +41,14 @@ export default function ProductPage() {
     return () => document.body.classList.remove("scroll-lock-modal");
   }, [zoom]);
 
+  if (isLoading && !item) {
+    return (
+      <div className="page empty">
+        <Loader label="Loading dish…" />
+      </div>
+    );
+  }
+
   if (!item) {
     return (
       <div className="page empty">
@@ -49,8 +59,13 @@ export default function ProductPage() {
     );
   }
 
-  const addOns = item.allowAddOns ? getAddOns(item.diet) : [];
-  const extra = selected.reduce((sum, id) => sum + (getMenuItem(id)?.price || 0), 0);
+  const addOns = item.allowAddOns
+    ? item.addOns?.length
+      ? item.addOns.filter((a) => a.available !== false)
+      : getAddOnsFor(item.diet)
+    : [];
+  const addonById = Object.fromEntries(addOns.map((a) => [a.id, a]));
+  const extra = selected.reduce((sum, id) => sum + (addonById[id]?.price || 0), 0);
   const total = (item.price + extra) * qty;
   const soldOut = item.available === false;
 
@@ -64,10 +79,11 @@ export default function ProductPage() {
     if (soldOut) return;
     addToCart({
       productId: item.id,
+      slug: item.slug || item.id,
       quantity: qty,
       instructions,
       addOns: selected
-        .map((id) => getMenuItem(id))
+        .map((id) => addonById[id])
         .filter(Boolean)
         .map((addon) => ({ id: addon.id, name: addon.name, price: addon.price })),
     });
@@ -97,6 +113,9 @@ export default function ProductPage() {
           <h1>{item.name}</h1>
           <p className="product__price">{formatINR(item.price)}</p>
           <p className="product__desc">{item.description}</p>
+          {item.trackStock && item.availableStock != null && item.availableStock > 0 && item.availableStock <= 5 && (
+            <p className="menu-card__stock">Only {item.availableStock} left</p>
+          )}
 
           <div className="product__qty">
             <span id="qty-label">Quantity</span>

@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
-import { Menu, ShoppingBag, X } from "lucide-react";
+import { Menu, ShoppingBag, UserRound, X } from "lucide-react";
 import { mark } from "../assets/images";
+import { business } from "../config/business";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 import Button from "./Button";
 import MobileMenu from "./MobileMenu";
 
@@ -15,7 +17,9 @@ const links = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
   const { getCartCount, openDrawer, isNavOpen, openNav, closeNav } = useCart();
+  const { isAuthenticated, logout } = useAuth();
   const count = getCartCount();
 
   useEffect(() => {
@@ -45,7 +49,7 @@ export default function Navbar() {
           <img src={mark} alt="" width="48" height="48" />
           <span>
             <strong>Biryani By Brothers</strong>
-            <small>Two Brothers. One Recipe.</small>
+            <small>{business.tagline}</small>
           </span>
         </Link>
 
@@ -63,6 +67,45 @@ export default function Navbar() {
         </nav>
 
         <div className="nav__actions">
+          {isAuthenticated ? (
+            <div className="nav-account">
+              <button
+                type="button"
+                className="icon-btn"
+                aria-label="Account menu"
+                aria-expanded={accountOpen}
+                onClick={() => setAccountOpen((open) => !open)}
+              >
+                <UserRound size={20} />
+              </button>
+              {accountOpen && (
+                <div className="nav-account__menu">
+                  <Link to="/account" onClick={() => setAccountOpen(false)}>
+                    My Profile
+                  </Link>
+                  <Link to="/account/orders" onClick={() => setAccountOpen(false)}>
+                    My Orders
+                  </Link>
+                  <Link to="/account/addresses" onClick={() => setAccountOpen(false)}>
+                    Saved Addresses
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      setAccountOpen(false);
+                      await logout();
+                    }}
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link to="/login" className="nav__login">
+              Login
+            </Link>
+          )}
           <button
             type="button"
             className="icon-btn"

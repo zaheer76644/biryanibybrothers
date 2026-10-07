@@ -1,60 +1,39 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { createOrder, readLastOrder } from "../utils/orderStorage";
+import { useCallback } from "react";
+import { createOrder } from "../utils/orderStorage";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { updateCustomer, setLastOrder, emptyCustomer } from "../store/slices/orderSlice";
 
-const CUSTOMER_KEY = "bbb_customer";
-
-export const emptyCustomer = {
-  fullName: "",
-  mobile: "",
-  flat: "",
-  building: "",
-  area: "",
-  pincode: "",
-  instructions: "",
-  confirmed: false,
-};
-
-function readCustomer() {
-  try {
-    const raw = localStorage.getItem(CUSTOMER_KEY);
-    if (!raw) return emptyCustomer;
-    return { ...emptyCustomer, ...JSON.parse(raw), confirmed: false };
-  } catch {
-    return emptyCustomer;
-  }
-}
-
-const OrderContext = createContext(null);
+export { emptyCustomer };
 
 export function OrderProvider({ children }) {
-  const [customer, setCustomer] = useState(readCustomer);
-  const [lastOrder, setLastOrder] = useState(readLastOrder);
-
-  useEffect(() => {
-    const { confirmed, ...draft } = customer;
-    localStorage.setItem(CUSTOMER_KEY, JSON.stringify(draft));
-  }, [customer]);
-
-  const updateCustomer = (patch) => {
-    setCustomer((prev) => ({ ...prev, ...patch }));
-  };
-
-  const placeOrder = ({ items, pricing }) => {
-    const order = createOrder({ customer, items, pricing });
-    setLastOrder(order);
-    setCustomer((prev) => ({ ...prev, confirmed: false, instructions: "" }));
-    return order;
-  };
-
-  return (
-    <OrderContext.Provider value={{ customer, updateCustomer, lastOrder, placeOrder }}>
-      {children}
-    </OrderContext.Provider>
-  );
+  return children;
 }
 
 export function useOrder() {
-  const context = useContext(OrderContext);
-  if (!context) throw new Error("useOrder must be used within OrderProvider");
-  return context;
+  const dispatch = useAppDispatch();
+  const customer = useAppSelector((s) => s.order.customer);
+  const lastOrder = useAppSelector((s) => s.order.lastOrder);
+
+  const updateCustomerFn = useCallback(
+    (patch) => {
+      dispatch(updateCustomer(patch));
+    },
+    [dispatch]
+  );
+
+  const placeOrder = useCallback(
+    ({ items, pricing }) => {
+      const order = createOrder({ customer, items, pricing });
+      dispatch(setLastOrder(order));
+      return order;
+    },
+    [dispatch, customer]
+  );
+
+  return {
+    customer,
+    updateCustomer: updateCustomerFn,
+    lastOrder,
+    placeOrder,
+  };
 }

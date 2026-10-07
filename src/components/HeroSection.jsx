@@ -1,7 +1,6 @@
 import Button from "./Button";
 import FoodImage from "./FoodImage";
 import TrustBadges from "./TrustBadges";
-import { business } from "../config/business";
 import { formatINR } from "../utils/currency";
 
 export default function HeroSection({ image, featured }) {
@@ -28,10 +27,9 @@ export default function HeroSection({ image, featured }) {
         <div className="hero__copy">
           <p className="kicker is-light">Mira Road · Small batch</p>
           <h1>
-            <span>Two Brothers.</span>
-            <span>One Recipe.</span>
+            <span>From Our Handi</span>
+            <span>to Your Heart.</span>
           </h1>
-          <p className="hero__tagline">{business.taglineHeart}</p>
           <p className="lede">
             Small-batch veg and non-veg biryani, dum-cooked with love and served fresh in Mira Road.
           </p>

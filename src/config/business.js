@@ -10,8 +10,7 @@ const localNumber = BUSINESS_WHATSAPP_NUMBER.startsWith("91")
 
 export const business = {
   name: "Biryani By Brothers",
-  tagline: "Two Brothers. One Recipe.",
-  taglineHeart: "From Our Handi to Your Heart.",
+  tagline: "From Our Handi to Your Heart.",
   location: "Mira Road, Maharashtra",
   kitchen: "Home Kitchen",
   hours: "12 PM – 11 PM",

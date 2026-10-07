@@ -18,8 +18,8 @@ export default function AboutPage() {
     <div className="page">
       <PageHero
         eyebrow={business.location}
-        title="Two Brothers. One Recipe."
-        text={`${business.taglineHeart} We started with a simple idea — make the kind of biryani we'd happily order for ourselves.`}
+        title={business.tagline}
+        text="We started with a simple idea — make the kind of biryani we'd happily order for ourselves."
       />
       <section className="section section--cream">
         <div className="wrap story">

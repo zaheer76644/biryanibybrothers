@@ -1,69 +1,50 @@
-# Biryani By Brothers
+# Biryani By Brothers — Frontend
 
-Static React website for **Biryani By Brothers** — a small-batch biryani kitchen in Mira Road, Mumbai.
+React + Vite storefront for Biryani By Brothers.
 
-Tagline: *Two Brothers. One Recipe.*
-
-## Stack
-
-- React + Vite
-- React Router
-- Lucide React
-- Local CSS (no Tailwind)
-- Cart / order state in React Context + `localStorage`
-
-No backend, database, auth, or payment gateway. Orders are saved locally for now.
-
-## Run locally
+## Setup
 
 ```bash
+cp .env.example .env
 npm install
 npm run dev
 ```
 
-Build for production:
+Open http://localhost:5173
+
+## Environment
 
 ```bash
-npm run build
-npm run preview
+# Leave empty in local dev (uses Vite proxy /api → backend :5000)
+VITE_API_URL=
 ```
 
-## Where to edit business data
+Production:
 
-| What | File |
-| --- | --- |
-| Menu prices, names, availability | `src/data/menu.js` |
-| Configurable prices (Hyderabad, Dum, Gulab Jamun, Coke) | `CONFIGURABLE_PRICES` in `src/data/menu.js` |
-| Delivery fee / free-delivery threshold | `src/config/deliveryConfig.js` |
-| WhatsApp number, hours, location | `src/config/business.js` |
-| Today’s batch count | `todaysBatch` in `src/config/business.js` |
-| Demo reviews | `src/data/reviews.js` |
-| Images | `src/assets/images/` + `src/assets/images.js` |
-
-**Replace before launch**
-
-1. `BUSINESS_WHATSAPP_NUMBER` in `src/config/business.js` (placeholder: `919876543210`)
-2. Instagram URL in the same file
-3. Placeholder reviews in `src/data/reviews.js`
-4. Menu photos if you have better kitchen shots
-
-## Pages
-
-Home · Menu · Product · Cart · Checkout · Order confirmation · About · Contact · FAQ · Privacy · Terms
-
-Payment method on checkout: **Cash / UPI on Delivery** only.
-
-## Project layout
-
+```bash
+VITE_API_URL=https://your-api-domain.com/api
 ```
-src/
-  assets/       # logo + food images
-  components/   # reusable UI
-  config/       # brand, delivery, WhatsApp
-  context/      # cart + order state
-  data/         # menu, FAQ, reviews
-  hooks/
-  pages/
-  styles/
-  utils/
-```
+
+## State management
+
+Redux Toolkit (`@reduxjs/toolkit` + `react-redux`):
+
+- `src/store/` — store, slices, bootstrap
+- Slices: `auth`, `adminAuth`, `catalog`, `cart`, `order`
+- Existing hooks (`useAuth`, `useCart`, `useCatalog`, …) still work as thin Redux wrappers
+
+## Scripts
+
+| Command | Purpose |
+|---------|---------|
+| `npm run dev` | Start Vite |
+| `npm run build` | Production build |
+| `npm run preview` | Preview build |
+
+## Auth / cart notes
+
+- Guest can browse menu and use cart
+- Checkout, account, orders require login
+- Cart is stored in `localStorage` (`bbb_cart`) and survives login
+
+Backend API lives in a separate repository (`backend/`).
